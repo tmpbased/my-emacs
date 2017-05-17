@@ -27,9 +27,26 @@
 (require 'erlang-start)
 
 ;; Neotree
-(add-to-list 'load-path "/home/evgeniy/build/emacs-neotree")
-(require 'neotree)
+(package-install 'neotree)
+(setq-default neo-show-hidden-files t)
 (global-set-key [f8] 'neotree-toggle)
 
+;; Ivy
+(package-install 'ivy)
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+(package-install 'swiper)
+(global-set-key "\C-s" 'swiper)
+(package-install 'counsel)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+
 ;; Projectile
-(global-set-key [C-f8] 'projectile-mode)
+(package-install 'projectile)
+(projectile-global-mode)
+(setq projectile-enable-caching t)
+
+;; Counsel + Projectile
+(package-install 'counsel-projectile)
+(counsel-projectile-on)
