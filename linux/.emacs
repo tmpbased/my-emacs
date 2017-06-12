@@ -14,7 +14,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (counsel-projectile counsel swiper ivy neotree auto-complete projectile intero magit heap geiser))))
+    (slime eclim counsel-projectile counsel swiper ivy neotree auto-complete projectile intero magit heap geiser))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -55,3 +55,8 @@
 
 ;; Magit
 (package-install 'magit)
+
+;; Slime
+(package-install 'slime)
+(setq inferior-lisp-program "/usr/bin/sbcl")
+(setq slime-contribs '(slime-fancy))
