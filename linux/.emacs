@@ -60,3 +60,14 @@
 (package-install 'slime)
 (setq inferior-lisp-program "/usr/bin/sbcl")
 (setq slime-contribs '(slime-fancy))
+
+;; auto-complete
+(global-auto-complete-mode t)
+(auto-complete-mode t)
+
+;; ac-slime
+(package-install 'ac-slime)
+(add-hook 'slime-mode-hook 'set-up-slime-ac)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'slime-repl-mode))
