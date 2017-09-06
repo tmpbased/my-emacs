@@ -13,7 +13,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (parinfer lispy ac-slime slime eclim counsel-projectile counsel swiper ivy neotree auto-complete projectile intero magit heap geiser))))
+    (easy-escape expand-region aggressive-indent lispy ac-sly sly counsel-projectile counsel swiper ivy neotree auto-complete projectile intero magit heap geiser))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -85,52 +85,79 @@
 (use-package magit
   :ensure t)
 
-;; Slime
-(use-package slime
+;; Sly
+(use-package sly
   :ensure t
   :init
   (progn
-    (setq inferior-lisp-program "/usr/bin/sbcl")
-    (setq slime-contribs '(slime-fancy))))
+    (setq inferior-lisp-program "/usr/bin/sbcl")))
 
 ;; auto-complete
-(global-auto-complete-mode t)
-(auto-complete-mode t)
-
-;; ac-slime
-(use-package ac-slime
+(use-package auto-complete
   :ensure t
   :init
   (progn
-    (add-hook 'slime-mode-hook 'set-up-slime-ac)
-    (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-    (eval-after-load "auto-complete"
-      '(add-to-list 'ac-modes 'slime-repl-mode))))
+    (add-hook 'lisp-mode-hook (lambda () (auto-complete-mode t)))
+    (add-hook 'emacs-lisp-mode-hook (lambda () (auto-complete-mode t)))
+    (add-hook 'sly-mode-hook (lambda () (auto-complete-mode t)))))
+
+;; ac-sly
+(use-package ac-sly
+  :ensure t
+  :init
+  (progn
+    (add-hook 'sly-mode-hook 'set-up-sly-ac)
+    (eval-after-load 'auto-complete
+      '(add-to-list 'ac-modes 'sly-mrepl-mode))))
 
 ;; Lispy
 (use-package lispy
-  :ensure t)
-
-;; Parinfer
-(use-package parinfer
   :ensure t
-  :bind
-  (("C-," . parinfer-toggle-mode))
   :init
   (progn
-    (setq parinfer-extensions
-          '(defaults       ; should be included.
-	     pretty-parens  ; different paren styles for different modes.
-	     evil           ; If you use Evil.
-	     lispy          ; If you use Lispy. With this extension, you should install Lispy and do not enable lispy-mode directly.
-	     paredit        ; Introduce some paredit commands.
-	     smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
-	     smart-yank))   ; Yank behavior depend on mode.
-    (add-hook 'clojure-mode-hook #'parinfer-mode)
-    (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
-    (add-hook 'common-lisp-mode-hook #'parinfer-mode)
-    (add-hook 'scheme-mode-hook #'parinfer-mode)
-    (add-hook 'lisp-mode-hook #'parinfer-mode)))
+    (global-set-key
+     (kbd "C-c )")
+     (lambda ()
+       (interactive)
+       (if (bound-and-true-p lispy-mode)
+	   (progn
+	     (lispy-mode 0)
+	     (insert ")")
+	     (lispy-mode 1))
+	 (insert ")"))))
+    (let ((it (lambda () (lispy-mode 1))))
+      (add-hook 'lisp-mode-hook it)
+      (add-hook 'emacs-lisp-mode-hook it)
+      (add-hook 'sly-mode-hook it))))
+
+(add-hook 'lisp-mode-hook (lambda () (show-paren-mode t)))
+(add-hook 'emacs-lisp-mode-hook (lambda () (show-paren-mode t)))
+(add-hook 'sly-lisp-mode-hook (lambda () (show-paren-mode t)))
+
+;; easy-escape
+(use-package easy-escape
+  :ensure t
+  :init
+  (progn
+    (add-hook 'lisp-mode-hook 'easy-escape-minor-mode)
+    (add-hook 'emacs-lisp-mode-hook 'easy-escape-minor-mode)
+    (add-hook 'sly-mode-hook 'easy-escape-minor-mode)))
+
+;; expand-region
+(use-package expand-region
+  :ensure t
+  :init
+  (progn
+    (global-set-key (kbd "C-=") 'er/expand-region)))
+
+;; aggressive-indent-mode
+(use-package aggressive-indent
+  :ensure t
+  :init
+  (progn
+    (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
+    (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+    (add-hook 'sly-mode-hook #'aggressive-indent-mode)))
 
 ;; Make keyboard shortcuts work for non-english keyboard layout.
 ;; Source: http://reangdblog.blogspot.com/2015/05/emacs.html
