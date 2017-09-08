@@ -6,21 +6,6 @@
 (package-initialize)
 (package-refresh-contents)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (easy-escape expand-region aggressive-indent lispy ac-sly sly counsel-projectile counsel swiper ivy neotree auto-complete projectile intero magit heap geiser))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
 ;; use-package: a package configuration macro
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
@@ -109,6 +94,13 @@
     (add-hook 'sly-mode-hook 'set-up-sly-ac)
     (eval-after-load 'auto-complete
       '(add-to-list 'ac-modes 'sly-mrepl-mode))))
+
+(use-package sly-company
+  :ensure t
+  :init
+  (progn
+    (add-hook 'sly-mode-hook 'sly-company-mode)
+    (add-to-list 'company-backends 'sly-company)))
 
 ;; Lispy
 (use-package lispy
