@@ -80,6 +80,12 @@
 ;; Sly
 (use-package sly
   :ensure t
+  :bind (:map sly-mode-map
+	      ("C-<up>" . sly-mrepl-previous-input-or-button)
+	      ("C-<down>" . sly-mrepl-next-input-or-button)
+	      ("C-<left>" . sly-button-backward)
+	      ("C-<right>" . sly-button-forward)
+	      ("M-." . sly-edit-definition)) 
   :init
   (progn
     (setq inferior-lisp-program "/usr/bin/sbcl")))
@@ -112,6 +118,8 @@
 ;; Lispy
 (use-package lispy
   :ensure t
+  :bind (:map lispy-mode-map
+	      ("M-." . nil))
   :init
   (progn
     (global-set-key
@@ -157,6 +165,12 @@
     (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
     (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
     (add-hook 'sly-mode-hook #'aggressive-indent-mode)))
+
+(use-package evil
+  :ensure t
+  :init
+  (progn
+    (evil-mode 1)))
 
 ;; Make keyboard shortcuts work for non-english keyboard layout.
 ;; Source: http://reangdblog.blogspot.com/2015/05/emacs.html
