@@ -91,22 +91,22 @@
     (setq inferior-lisp-program "/usr/bin/sbcl")))
 
 ;; auto-complete
-(use-package auto-complete
-  :ensure t
-  :init
-  (progn
-    (add-hook 'lisp-mode-hook (lambda () (auto-complete-mode t)))
-    (add-hook 'emacs-lisp-mode-hook (lambda () (auto-complete-mode t)))
-    (add-hook 'sly-mode-hook (lambda () (auto-complete-mode t)))))
+;; (use-package auto-complete
+;;   :ensure t
+;;   :init
+;;   (progn
+;;     (add-hook 'lisp-mode-hook (lambda () (auto-complete-mode t)))
+;;     (add-hook 'emacs-lisp-mode-hook (lambda () (auto-complete-mode t)))
+;;     (add-hook 'sly-mode-hook (lambda () (auto-complete-mode t)))))
 
 ;; ac-sly
-(use-package ac-sly
-  :ensure t
-  :init
-  (progn
-    (add-hook 'sly-mode-hook 'set-up-sly-ac)
-    (eval-after-load 'auto-complete
-      '(add-to-list 'ac-modes 'sly-mrepl-mode))))
+;; (use-package ac-sly
+;;   :ensure t
+;;   :init
+;;   (progn
+;;     (add-hook 'sly-mode-hook 'set-up-sly-ac)
+;;     (eval-after-load 'auto-complete
+;;       '(add-to-list 'ac-modes 'sly-mrepl-mode))))
 
 (use-package sly-company
   :ensure t
