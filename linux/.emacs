@@ -80,6 +80,7 @@
 ;; Sly
 (use-package sly
   :ensure t
+  :load-path "site-lisp/sly"
   :bind (:map sly-mode-map
 	      ("C-<up>" . sly-mrepl-previous-input-or-button)
 	      ("C-<down>" . sly-mrepl-next-input-or-button)
@@ -88,6 +89,7 @@
 	      ("M-." . sly-edit-definition)) 
   :init
   (progn
+    (require 'sly-autoloads)
     (setq inferior-lisp-program "/usr/bin/sbcl")))
 
 ;; auto-complete
@@ -118,6 +120,7 @@
 ;; Lispy
 (use-package lispy
   :ensure t
+  :load-path "site-lisp/lispy"
   :bind (:map lispy-mode-map
 	      ("M-." . nil))
   :init
@@ -135,7 +138,11 @@
     (let ((it (lambda () (lispy-mode 1))))
       (add-hook 'lisp-mode-hook it)
       (add-hook 'emacs-lisp-mode-hook it)
-      (add-hook 'sly-mode-hook it))))
+      (add-hook 'sly-mode-hook it))
+    (setq lispy-colon-p t)
+    (setq lispy-colon-no-space-regex
+	  '((lisp-mode . "\\s-\\|[:^?#]\\|ql\\|\\(?:\\s([[:word:]-]*\\)")
+	    (sly-mrepl-mode . "\\s-\\|[:^?#]\\|ql\\|\\(?:\\s([[:word:]-]*\\)")))))
 
 (add-hook 'lisp-mode-hook (lambda () (show-paren-mode t)))
 (add-hook 'emacs-lisp-mode-hook (lambda () (show-paren-mode t)))
