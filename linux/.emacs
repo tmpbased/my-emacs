@@ -21,6 +21,8 @@
 (require 'diminish)
 (require 'bind-key)
 
+(add-hook 'after-init-hook 'global-company-mode)
+
 ;; Intero
 (use-package intero
   :ensure t
@@ -71,7 +73,7 @@
 ;; Counsel + Projectile
 (use-package counsel-projectile
   :ensure t
-  :config (counsel-projectile-on))
+  :config (counsel-projectile-mode))
 
 ;; Magit
 (use-package magit
@@ -110,12 +112,12 @@
 ;;     (eval-after-load 'auto-complete
 ;;       '(add-to-list 'ac-modes 'sly-mrepl-mode))))
 
-(use-package sly-company
-  :ensure t
-  :init
-  (progn
-    (add-hook 'sly-mode-hook 'sly-company-mode)
-    (add-to-list 'company-backends 'sly-company)))
+;; (use-package sly-company
+;;   :ensure t
+;;   :init
+;;   (progn
+;;     (add-hook 'sly-mode-hook 'sly-company-mode)
+;;     (add-to-list 'company-backends 'sly-company)))
 
 ;; Lispy
 (use-package lispy
