@@ -4,7 +4,7 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
-(package-refresh-contents)
+;; (package-refresh-contents)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -21,19 +21,23 @@
 (require 'diminish)
 (require 'bind-key)
 
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;; Intero
-(use-package intero
-  :ensure t
-  :init
-  (add-hook 'haskell-mode-hook 'intero-mode))
+;; (use-package intero
+;;   :ensure t
+;;   :init
+;;   (add-hook 'haskell-mode-hook 'intero-mode))
 
 ;; Erlang mode
-(setq load-path (cons  "/usr/lib/erlang/lib/tools-2.10/emacs" load-path))
-(setq erlang-root-dir "/usr/lib/erlang")
-(setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
-(require 'erlang-start)
+;; (setq load-path (cons  "/usr/lib/erlang/lib/tools-2.10.1/emacs" load-path))
+;; (setq erlang-root-dir "/usr/lib/erlang")
+;; (setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
+;; (require 'erlang-start)
 
 ;; Neotree
 (use-package neotree
@@ -82,7 +86,7 @@
 ;; Sly
 (use-package sly
   :ensure t
-  :load-path "site-lisp/sly"
+  ;; :load-path "site-lisp/sly"
   :bind (:map sly-mode-map
 	      ("C-<up>" . sly-mrepl-previous-input-or-button)
 	      ("C-<down>" . sly-mrepl-next-input-or-button)
@@ -122,7 +126,7 @@
 ;; Lispy
 (use-package lispy
   :ensure t
-  :load-path "site-lisp/lispy"
+  ;; :load-path "site-lisp/lispy"
   :bind (:map lispy-mode-map
 	      ("M-." . nil))
   :init
@@ -145,6 +149,12 @@
     (setq lispy-colon-no-space-regex
 	  '((lisp-mode . "\\s-\\|[:^?#]\\|ql\\|\\(?:\\s([[:word:]-]*\\)")
 	    (sly-mrepl-mode . "\\s-\\|[:^?#]\\|ql\\|\\(?:\\s([[:word:]-]*\\)")))))
+
+(use-package lispyville
+  :ensure t
+  :init
+  (progn
+    (add-hook 'lispy-mode-hook #'lispyville-mode)))
 
 (add-hook 'lisp-mode-hook (lambda () (show-paren-mode t)))
 (add-hook 'emacs-lisp-mode-hook (lambda () (show-paren-mode t)))
@@ -179,6 +189,7 @@
   :ensure t
   :init
   (progn
+    (setq evil-want-C-i-jump nil)
     (evil-mode 1)))
 
 ;; Make keyboard shortcuts work for non-english keyboard layout.
