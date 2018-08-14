@@ -74,6 +74,8 @@
     (projectile-global-mode)
     (setq projectile-enable-caching t)))
 
+(setq projectile-keymap-prefix (kbd "C-c C-p"))
+
 ;; Counsel + Projectile
 (use-package counsel-projectile
   :ensure t
