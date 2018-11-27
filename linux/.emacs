@@ -220,3 +220,8 @@
       (activate-input-method current))))
 
 (reverse-input-method 'ukrainian-computer)
+
+;; https://www.emacswiki.org/emacs/SetFonts
+(let ((font "Hack-10"))
+  (add-to-list 'default-frame-alist `(font . ,font))
+  (set-face-attribute 'default t :font font))
