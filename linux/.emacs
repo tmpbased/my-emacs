@@ -164,14 +164,7 @@
     (setq evil-want-C-i-jump nil)
     (evil-mode 1)))
 
-
 ;; https://www.emacswiki.org/emacs/SetFonts
 (let ((font "Hack-10"))
   (add-to-list 'default-frame-alist `(font . ,font))
   (set-face-attribute 'default t :font font))
-
-;; Make keyboard shortcuts work for non-english keyboard layout.
-(use-package reverse-im
-  :ensure t
-  :config
-  (reverse-im-activate "ukrainian-computer"))
