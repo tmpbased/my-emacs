@@ -27,18 +27,6 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
-;; Intero
-;; (use-package intero
-;;   :ensure t
-;;   :init
-;;   (add-hook 'haskell-mode-hook 'intero-mode))
-
-;; Erlang mode
-;; (setq load-path (cons  "/usr/lib/erlang/lib/tools-2.10.1/emacs" load-path))
-;; (setq erlang-root-dir "/usr/lib/erlang")
-;; (setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
-;; (require 'erlang-start)
-
 ;; Neotree
 (use-package neotree
   :ensure t
@@ -99,31 +87,6 @@
   (progn
     (require 'sly-autoloads)
     (setq inferior-lisp-program "/usr/bin/sbcl")))
-
-;; auto-complete
-;; (use-package auto-complete
-;;   :ensure t
-;;   :init
-;;   (progn
-;;     (add-hook 'lisp-mode-hook (lambda () (auto-complete-mode t)))
-;;     (add-hook 'emacs-lisp-mode-hook (lambda () (auto-complete-mode t)))
-;;     (add-hook 'sly-mode-hook (lambda () (auto-complete-mode t)))))
-
-;; ac-sly
-;; (use-package ac-sly
-;;   :ensure t
-;;   :init
-;;   (progn
-;;     (add-hook 'sly-mode-hook 'set-up-sly-ac)
-;;     (eval-after-load 'auto-complete
-;;       '(add-to-list 'ac-modes 'sly-mrepl-mode))))
-
-;; (use-package sly-company
-;;   :ensure t
-;;   :init
-;;   (progn
-;;     (add-hook 'sly-mode-hook 'sly-company-mode)
-;;     (add-to-list 'company-backends 'sly-company)))
 
 ;; Lispy
 (use-package lispy
@@ -194,34 +157,14 @@
     (setq evil-want-C-i-jump nil)
     (evil-mode 1)))
 
-;; Make keyboard shortcuts work for non-english keyboard layout.
-;; Source: http://reangdblog.blogspot.com/2015/05/emacs.html
-(defun reverse-input-method (input-method)
-  "Build the reverse mapping of single letters from INPUT-METHOD."
-  (interactive
-   (list (read-input-method-name "Use input method (default current): ")))
-  (if (and input-method (symbolp input-method))
-      (setq input-method (symbol-name input-method)))
-  (let ((current current-input-method)
-        (modifiers '(nil (control) (meta) (control meta))))
-    (when input-method
-      (activate-input-method input-method))
-    (when (and current-input-method quail-keyboard-layout)
-      (dolist (map (cdr (quail-map)))
-        (let* ((to (car map))
-               (from (quail-get-translation
-                      (cadr map) (char-to-string to) 1)))
-          (when (and (characterp from) (characterp to))
-            (dolist (mod modifiers)
-              (define-key local-function-key-map
-                (vector (append mod (list from)))
-                (vector (append mod (list to)))))))))
-    (when input-method
-      (activate-input-method current))))
-
-(reverse-input-method 'ukrainian-computer)
 
 ;; https://www.emacswiki.org/emacs/SetFonts
 (let ((font "Hack-10"))
   (add-to-list 'default-frame-alist `(font . ,font))
   (set-face-attribute 'default t :font font))
+
+;; Make keyboard shortcuts work for non-english keyboard layout.
+(use-package reverse-im
+  :ensure t
+  :config
+  (reverse-im-activate "ukrainian-computer"))
