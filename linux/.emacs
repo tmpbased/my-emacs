@@ -13,6 +13,13 @@
  ;; If there is more than one, they won't work right.
  '(lispy-use-sly t))
 
+;; Disable the menu bar.
+(menu-bar-mode -1)
+;; Disable the scrollbar.
+(toggle-scroll-bar -1)
+;; Disable the toolbar.
+(tool-bar-mode -1)
+
 ;; use-package: a package configuration macro
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
