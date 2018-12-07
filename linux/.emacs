@@ -34,12 +34,10 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
-;; Neotree
-(use-package neotree
+(use-package dired-sidebar
+  :bind ("<f8>" . dired-sidebar-toggle-sidebar)
   :ensure t
-  :bind ("<f8>" . neotree-toggle)
-  :init
-  (setq-default neo-show-hidden-files t))
+  :commands (dired-sidebar-toggle-sidebar))
 
 ;; Ivy
 (use-package ivy
