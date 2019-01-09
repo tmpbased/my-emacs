@@ -115,10 +115,7 @@
       (add-hook 'lisp-mode-hook it)
       (add-hook 'emacs-lisp-mode-hook it)
       (add-hook 'sly-mode-hook it))
-    (setq lispy-colon-p t)
-    (setq lispy-colon-no-space-regex
-	  '((lisp-mode . "\\s-\\|[:^?#]\\|ql\\|\\(?:\\s([[:word:]-]*\\)")
-	    (sly-mrepl-mode . "\\s-\\|[:^?#]\\|ql\\|\\(?:\\s([[:word:]-]*\\)")))))
+    (setq lispy-colon-p nil)))
 
 (use-package lispyville
   :ensure t
