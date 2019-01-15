@@ -159,6 +159,13 @@
     (setq evil-want-C-i-jump nil)
     (evil-mode 1)))
 
+(use-package drag-stuff
+  :ensure t
+  :init
+  (progn
+    (drag-stuff-global-mode 1)
+    (drag-stuff-define-keys)))
+
 ;; https://www.emacswiki.org/emacs/SetFonts
 (let ((font "Hack-10"))
   (add-to-list 'default-frame-alist `(font . ,font))
