@@ -1,6 +1,3 @@
-[submodule "linux/.emacs.d/site-lisp/sly"]
-	path = linux/.emacs.d/site-lisp/sly
-	url = https://github.com/joaotavora/sly
-[submodule "linux/.emacs.d/site-lisp/lispy"]
-	path = linux/.emacs.d/site-lisp/lispy
-	url = https://github.com/abo-abo/lispy
+[submodule "linux/.emacs.d/site-lisp/smex"]
+	path = linux/.emacs.d/site-lisp/smex
+	url = https://github.com/zVcXr/smex

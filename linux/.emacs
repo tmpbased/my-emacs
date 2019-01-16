@@ -11,7 +11,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(lispy-use-sly t))
+ '(inhibit-startup-screen t)
+ '(lispy-use-sly t)
+ '(smex-completion-method (quote ivy))
+ '(smex-history-length 5)
 
 ;; Disable the menu bar.
 (menu-bar-mode -1)
@@ -165,6 +168,10 @@
   (progn
     (drag-stuff-global-mode 1)
     (drag-stuff-define-keys)))
+
+(use-package smex
+  :ensure t
+  :load-path "site-lisp/smex") 
 
 ;; https://www.emacswiki.org/emacs/SetFonts
 (let ((font "Hack-10"))
