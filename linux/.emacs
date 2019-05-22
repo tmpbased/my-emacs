@@ -93,7 +93,6 @@
 	      ("M-." . sly-edit-definition)) 
   :init
   (progn
-    (require 'sly-autoloads)
     (setq inferior-lisp-program "/usr/bin/sbcl")))
 
 ;; Lispy
