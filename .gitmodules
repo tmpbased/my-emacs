@@ -1,3 +1,0 @@
-[submodule "linux/.emacs.d/site-lisp/smex"]
-	path = linux/.emacs.d/site-lisp/smex
-	url = https://github.com/zVcXr/smex

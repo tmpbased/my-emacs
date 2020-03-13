@@ -1,10 +1,9 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
-;; (package-refresh-contents)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -12,9 +11,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
- '(lispy-use-sly t)
- '(smex-completion-method (quote ivy))
- '(smex-history-length 5)
+ '(lispy-use-sly t))
 
 ;; Disable the menu bar.
 (menu-bar-mode -1)
@@ -25,17 +22,22 @@
 
 ;; use-package: a package configuration macro
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)
 (require 'bind-key)
 
 (require 'server)
 (unless (server-running-p)
   (server-start))
 
-(add-hook 'after-init-hook 'global-company-mode)
+(use-package diminish
+  :ensure t)
+
+(use-package company
+  :ensure t
+  :config (global-company-mode))
 
 (use-package dired-sidebar
   :bind ("<f8>" . dired-sidebar-toggle-sidebar)
@@ -65,6 +67,7 @@
 ;; Projectile
 (use-package projectile
   :ensure t
+  :bind-keymap (("C-c p" . projectile-command-map))
   :config
   (progn
     (projectile-global-mode)
@@ -154,6 +157,9 @@
     (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
     (add-hook 'sly-mode-hook #'aggressive-indent-mode)))
 
+(use-package undo-tree
+  :ensure t)
+
 (use-package evil
   :ensure t
   :init
@@ -168,9 +174,8 @@
     (drag-stuff-global-mode 1)
     (drag-stuff-define-keys)))
 
-(use-package smex
-  :ensure t
-  :load-path "site-lisp/smex") 
+(use-package amx
+  :ensure t) 
 
 ;; https://www.emacswiki.org/emacs/SetFonts
 (let ((font "Hack-10"))
